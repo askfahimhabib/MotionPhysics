@@ -1085,12 +1085,14 @@
         padding: 3rem 4rem;
       }
 
-      .footer-inner {
+       .footer-inner {
         max-width: 1300px;
         margin: 0 auto;
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        gap: 0.8rem;
       }
 
       .footer-logo {
@@ -1117,10 +1119,19 @@
         color: var(--accent2);
       }
 
-      .footer-copy {
+       .footer-copy {
         font-size: 0.78rem;
         color: var(--muted);
         font-family: "Space Mono", monospace;
+        margin-top: 0.5rem;
+      }
+
+      .footer-made-with {
+        font-size: 0.8rem;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        text-align: center;
+        margin-top: 2rem;
       }
 
       .footer-socials {
@@ -1833,6 +1844,10 @@
           <a class="social-btn" href="https://www.youtube.com/@edu.MotionPhysics"><i class="fa-brands fa-youtube"></i></a>
         </div>
       </div>
+      
+        <div class="footer-made-with">
+          Made with <span style="color: var(--accent2);">❤️</span> by <a href="https://www.facebook.com/askfahimhabib" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none; font-weight: 600;">Fahim Habib</a>
+        </div>
     </footer>
 
      <script>

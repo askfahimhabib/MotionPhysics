@@ -1046,10 +1046,21 @@
         white-space: nowrap;
       }
 
+       .schedule-wrapper {
+        padding: 1.5rem 0;
+        margin-top: 1rem;
+        border-top: 1px solid var(--border);
+      }
+
+      .schedule-wrapper .section-title {
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+        margin-bottom: 1.5rem;
+      }
+
       .schedule-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 2rem;
+        margin-top: 1rem;
       }
 
       .schedule-table th {
@@ -1610,33 +1621,6 @@
                   </div>
                 </div>
             </div>
-
-            <table class="schedule-table">
-              <thead>
-                <tr>
-                  <th>Day</th>
-                  <th>Batch</th>
-                  <th>Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Sat, Mon & Wed</td>
-                  <td>JSC Morning</td>
-                  <td>7:00 – 8:00 AM</td>
-                </tr>
-                <tr>
-                  <td>Sun, Tue & thu</td>
-                  <td>SSC Morning</td>
-                  <td>9:00 – 10:00 PM</td>
-                </tr>
-                <tr>
-                  <td>Friday</td>
-                  <td>Weekly Exam</td>
-                  <td>2:30 – 5:00 PM</td>
-                </tr>
-              </tbody>
-            </table>
           </div>
 
           <div class="map-placeholder">
@@ -1819,6 +1803,38 @@
               <div class="pin-dot"></div>
               <div class="pin-label">MOTION PHYSICS</div>
             </div>
+          </div>
+ 
+          <div class="schedule-wrapper">
+          <h2 class="section-title">
+          WE ARE <span style="color: var(--accent)">OPEN</span>
+        </h2>
+          <table class="schedule-table">
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>Batch</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sat, Mon & Wed</td>
+                  <td>JSC Morning</td>
+                  <td>7:00 – 8:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Sun, Tue & thu</td>
+                  <td>SSC Morning</td>
+                  <td>9:00 – 10:00 PM</td>
+                </tr>
+                <tr>
+                  <td>Friday</td>
+                  <td>Weekly Exam</td>
+                  <td>2:30 – 5:00 PM</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@
     />
     <link rel="shortcut icon" href="./images/logo-fav.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
       :root {
         --bg: #080c14;
@@ -1840,7 +1841,7 @@
       </div>
     </section>
 
-    <!-- FOOTER -->
+
     <footer>
       <div class="footer-inner">
         <div class="footer-logo">
@@ -1885,29 +1886,94 @@
         });
       });
 
+
+
+      // ─── EMAILJS CONFIGURATION ───
+      // To receive form submissions via email, follow these steps:
+      // 1. Sign up at https://www.emailjs.com/ (free tier available)
+      // 2. Add an email service (e.g., Gmail, Outlook) from the dashboard
+      // 3. Create an email template with the following variables:
+      //    - ${from_name}      → Sender's name
+      //    - ${from_email}     → Sender's email
+      //    - ${from_phone}     → Sender's phone (optional)
+      //    - ${teacher}        → Selected teacher
+      //    - ${message}        → Message content
+      //    - ${to_email}       → Your inbox (edu.motionphysics@gmail.com)
+      //    - ${reply_to}       → Reply-to address (sender's email)
+      // 4. Copy your User ID (Public Key), Service ID, and Template ID
+      // 5. Replace the placeholder values below with your actual credentials
+      const EMAILJS_USER_ID = "Sjo5sp_PIP2hrxR7j";
+      const EMAILJS_SERVICE_ID = "service_fahim";
+      const EMAILJS_TEMPLATE_ID = "template_dih5ulg";
+
+      // Initialize EmailJS with your user ID
+      emailjs.init(EMAILJS_USER_ID);
+
       function handleSubmit() {
-        const name = document.getElementById("fname").value.trim();
-        const email = document.getElementById("femail").value.trim();
-        const teacher = document.getElementById("fteacher").value;
-        const message = document.getElementById("fmessage").value.trim();
+        const fnameInput = document.getElementById("fname");
+        const fphoneInput = document.getElementById("fphone");
+        const femailInput = document.getElementById("femail");
+        const fteacherSelect = document.getElementById("fteacher");
+        const fmessageInput = document.getElementById("fmessage");
+        const successMsg = document.getElementById("successMsg");
+
+        const name = fnameInput.value.trim();
+        const phone = fphoneInput.value.trim();
+        const email = femailInput.value.trim();
+        const teacher = fteacherSelect.value;
+        const message = fmessageInput.value.trim();
 
         if (!name || !email || !teacher || !message) {
           alert("Please fill in all required fields.");
           return;
         }
 
-        const msg = document.getElementById("successMsg");
-        msg.style.display = "block";
+        // EmailJS template parameters
+        const emailParams = {
+          from_name: name,
+          from_email: email,
+          from_phone: phone || "Not provided",
+          teacher: teacher,
+          message: message,
+          to_email: "edu.motionphysics@gmail.com",
+          reply_to: email
+        };
 
-        document.getElementById("fname").value = "";
-        document.getElementById("fphone").value = "";
-        document.getElementById("femail").value = "";
-        document.getElementById("fteacher").value = "";
-        document.getElementById("fmessage").value = "";
+        // Show loading state
+        const submitBtn = document.querySelector(".btn-submit");
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "Sending...";
+        submitBtn.disabled = true;
 
-        setTimeout(() => {
-          msg.style.display = "none";
-        }, 5000);
+        // Send email via EmailJS
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, emailParams)
+          .then((response) => {
+            console.log('Email sent successfully:', response);
+
+            // Show success message
+            successMsg.style.display = "block";
+
+            // Clear form
+            fnameInput.value = "";
+            fphoneInput.value = "";
+            femailInput.value = "";
+            fteacherSelect.value = "";
+            fmessageInput.value = "";
+
+            // Reset button
+            setTimeout(() => {
+              successMsg.style.display = "none";
+              submitBtn.textContent = originalText;
+              submitBtn.disabled = false;
+            }, 5000);
+
+          })
+          .catch((error) => {
+            console.error('Email sending failed:', error);
+            alert("Failed to send message. Please try again or contact us directly.");
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+          });
       }
 
       // Scroll-triggered fade-in

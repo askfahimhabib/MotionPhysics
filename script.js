@@ -124,35 +124,35 @@ function handleSubmit() {
 // ════════════════════════════════════════════════════════════════════════
 const SUCCESS_PHOTOS = [
   {
-    src: "https://placehold.co/800x600/0d1422/00d4ff?text=Add+Your+Photo",
-    caption: "আপনার প্রথম ছবির ক্যাপশন এখানে লিখুন।",
-    label: "Result"
+    src: "./images/cover.jpg",
+    caption: "SSC 2026 Batch Farewell",
+    label: "Farewell",
   },
   {
-    src: "https://placehold.co/800x600/111929/ff6b2b?text=Add+Your+Photo",
-    caption: "দ্বিতীয় ছবির ক্যাপশন — যেমন: 'SSC 2024 Batch Farewell'",
-    label: "Event"
+    src: "./images/fw-2026.JPG",
+    caption: "'SSC 2026 Batch Farewell'",
+    label: "Farewell",
   },
   {
-    src: "https://placehold.co/800x600/0d1422/f5c842?text=Add+Your+Photo",
-    caption: "তৃতীয় ছবির ক্যাপশন — যেমন: 'Mock Test Top Performers'",
-    label: "Achievement"
+    src: "./images/picnic.jpg",
+    caption: " 'Picnic Tour to Luis Village'",
+    label: "Event",
   },
   {
-    src: "https://placehold.co/800x600/111929/00d4ff?text=Add+Your+Photo",
-    caption: "চতুর্থ ছবির ক্যাপশন — যেমন: 'Annual Prize Giving Ceremony'",
-    label: "Ceremony"
+    src: "./images/picnic.jpg",
+    caption: "চড়ুইভাতি-২০২৫'",
+    label: "Ceremony",
   },
   {
-    src: "https://placehold.co/800x600/0d1422/ff6b2b?text=Add+Your+Photo",
-    caption: "পঞ্চম ছবির ক্যাপশন — যেমন: 'Special Physics Lab Session'",
-    label: "Session"
+    src: "./images/fw-C8.jpg",
+    caption: "'First JSC Batch Farewell'",
+    label: "JSC",
   },
   {
-    src: "https://placehold.co/800x600/111929/f5c842?text=Add+Your+Photo",
-    caption: "ষষ্ঠ ছবির ক্যাপশন — যেমন: 'JSC Batch 2024 Success Story'",
-    label: "Success"
-  }
+    src: "./images/exm-2026.jpg",
+    caption: "'SSC Batch 2026 Exam Moment'",
+    label: "Success",
+  },
 ];
 
 // ── Carousel কতটি slide একসাথে দেখাবে সেটি screen size অনুযায়ী নির্ধারণ ──

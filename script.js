@@ -309,6 +309,12 @@ if (closeBtn) {
       localStorage.setItem('noticeClosed', 'true');
     }
   });
+
+  // Add touch support for mobile
+  closeBtn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    closeBtn.click();
+  });
 }
 
 // Initialize
@@ -352,13 +358,22 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// Prevent body scroll when modal is open
 function openNoticesModal() {
   noticesModal.style.display = 'flex';
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
   loadAllNotices();
+
+  // Focus management for accessibility
+  modalClose.focus();
 }
 
 function closeNoticesModal() {
   noticesModal.style.display = 'none';
+  document.body.style.overflow = ''; // Restore scrolling
+
+  // Return focus to trigger element
+  noticesLink.focus();
 }
 
 async function loadAllNotices() {

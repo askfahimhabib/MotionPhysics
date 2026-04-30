@@ -139,7 +139,7 @@ const SUCCESS_PHOTOS = [
     label: "Event",
   },
   {
-    src: "./images/picnic.jpg",
+    src: "./images/choruibati.jpg",
     caption: "চড়ুইভাতি-২০২৫'",
     label: "Ceremony",
   },

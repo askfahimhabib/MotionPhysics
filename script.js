@@ -249,16 +249,31 @@ function formatDate(dateString) {
   return `${year}-${month}-${day}`;
 }
 
+// Function to check and apply scrolling animation
+function checkTextOverflow() {
+  const titleElement = document.getElementById('notice-title');
+  if (titleElement) {
+    // Remove existing class first
+    titleElement.classList.remove('scrolling');
+    // Force reflow to get accurate measurements
+    titleElement.offsetHeight;
+    // Check if text overflows
+    if (titleElement.scrollWidth > titleElement.clientWidth + 10) { // +10 for some tolerance
+      titleElement.classList.add('scrolling');
+    }
+  }
+}
+
 // Main render function
 async function renderNotice() {
   const section = document.getElementById('notice-section');
   if (!section) return;
 
   const notices = await fetchNotices();
-  
+
   // Filter active notices only
   const activeNotices = notices.filter(isNoticeActive);
-  
+
   // Hide section if no active notices
   if (!activeNotices || activeNotices.length === 0) {
     section.style.display = 'none';
@@ -281,11 +296,14 @@ async function renderNotice() {
   });
 
   const latestNotice = activeNotices[0];
-  
+
   // Populate notice content
   document.getElementById('notice-title').textContent = latestNotice.title || 'Important Notice';
   document.getElementById('notice-message').textContent = latestNotice.message || '';
-  
+
+  // Check for text overflow and add scrolling animation
+  setTimeout(checkTextOverflow, 100);
+
   // NEW badge logic
   const badge = document.getElementById('notice-badge');
   if (isNoticeNew(latestNotice)) {
@@ -328,6 +346,11 @@ document.addEventListener('visibilitychange', () => {
   if (!document.hidden && localStorage.getItem('noticeClosed') !== 'true') {
     renderNotice();
   }
+});
+
+// Handle window resize to recheck text overflow
+window.addEventListener('resize', () => {
+  setTimeout(checkTextOverflow, 100);
 });
 
 // ─── MODAL FUNCTIONALITY ───

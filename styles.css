@@ -300,6 +300,15 @@ nav {
   }
 }
 
+@keyframes scrollText {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 .notice-title {
   font-family: "Bebas Neue", sans-serif;
   font-size: 0.9rem;
@@ -395,6 +404,7 @@ nav {
 @media (max-width: 480px) {
   #notice-section {
     padding: 0.3rem 0.75rem;
+    margin-top: 60px; /* Adjusted for mobile navbar height */
   }
 
   .notice-card {
@@ -427,6 +437,13 @@ nav {
     flex: 1;
     margin-right: 0.5rem;
     min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .notice-title.scrolling {
+    animation: scrollText 8s linear infinite;
   }
 
   .notice-message {
@@ -437,6 +454,12 @@ nav {
     max-height: 3.9em; /* 3 lines max */
     word-wrap: break-word;
     margin-top: 0.3rem;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .notice-message:hover {
+    animation: scrollText 8s linear infinite;
   }
 
   .notice-close {

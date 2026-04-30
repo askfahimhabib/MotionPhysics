@@ -106,7 +106,177 @@ function handleSubmit() {
     });
 }
 
-// Scroll-triggered fade-in
+// ─── OUR SUCCESS CAROUSEL ───
+// ════════════════════════════════════════════════════════════════════════
+//  ছবি যোগ / পরিবর্তন করতে নিচের SUCCESS_PHOTOS array edit করুন।
+//
+//  প্রতিটি entry-তে তিনটি জিনিস:
+//    src     → ছবির URL। সহজ উপায়গুলো:
+//               ১. ImgBB (https://imgbb.com) — ফ্রিতে upload করুন,
+//                  "Direct link" কপি করুন, সেটি এখানে বসান।
+//               ২. নিজের images/ ফোল্ডার → "./images/photo1.jpg"
+//               ৩. Google Photos → Share → "Anyone with link" → link
+//    caption → ছবির নিচে যে টেক্সট দেখাবে
+//    label   → ছবির উপরে ছোট রঙিন badge (যেমন "Result", "Event")
+//
+//  নতুন ছবি যোগ: নিচে {} দিয়ে নতুন object যোগ করুন।
+//  ছবি সরাতে: সেই object টি delete করুন।
+// ════════════════════════════════════════════════════════════════════════
+const SUCCESS_PHOTOS = [
+  {
+    src: "https://placehold.co/800x600/0d1422/00d4ff?text=Add+Your+Photo",
+    caption: "আপনার প্রথম ছবির ক্যাপশন এখানে লিখুন।",
+    label: "Result"
+  },
+  {
+    src: "https://placehold.co/800x600/111929/ff6b2b?text=Add+Your+Photo",
+    caption: "দ্বিতীয় ছবির ক্যাপশন — যেমন: 'SSC 2024 Batch Farewell'",
+    label: "Event"
+  },
+  {
+    src: "https://placehold.co/800x600/0d1422/f5c842?text=Add+Your+Photo",
+    caption: "তৃতীয় ছবির ক্যাপশন — যেমন: 'Mock Test Top Performers'",
+    label: "Achievement"
+  },
+  {
+    src: "https://placehold.co/800x600/111929/00d4ff?text=Add+Your+Photo",
+    caption: "চতুর্থ ছবির ক্যাপশন — যেমন: 'Annual Prize Giving Ceremony'",
+    label: "Ceremony"
+  },
+  {
+    src: "https://placehold.co/800x600/0d1422/ff6b2b?text=Add+Your+Photo",
+    caption: "পঞ্চম ছবির ক্যাপশন — যেমন: 'Special Physics Lab Session'",
+    label: "Session"
+  },
+  {
+    src: "https://placehold.co/800x600/111929/f5c842?text=Add+Your+Photo",
+    caption: "ষষ্ঠ ছবির ক্যাপশন — যেমন: 'JSC Batch 2024 Success Story'",
+    label: "Success"
+  }
+];
+
+// ── Carousel কতটি slide একসাথে দেখাবে সেটি screen size অনুযায়ী নির্ধারণ ──
+function getSlidesPerView() {
+  if (window.innerWidth <= 560) return 1;   // Mobile: ১টি
+  if (window.innerWidth <= 900) return 2;   // Tablet: ২টি
+  return 3;                                  // Desktop: ৩টি
+}
+
+// ── Carousel build করা ──
+function buildCarousel() {
+  const track = document.getElementById("carouselTrack");
+  const dotsContainer = document.getElementById("carouselDots");
+  if (!track || !dotsContainer) return;
+
+  // Slides তৈরি
+  track.innerHTML = SUCCESS_PHOTOS.map((photo, i) => `
+    <div class="carousel-slide" data-index="${i}">
+      <div class="slide-img-wrap">
+        <img src="${photo.src}" alt="${photo.caption}" loading="lazy" />
+        <span class="slide-label">${photo.label}</span>
+      </div>
+      <div class="slide-caption">
+        <p>${photo.caption}</p>
+      </div>
+    </div>
+  `).join("");
+
+  // Dots তৈরি — total groups of slides
+  const slidesPerView = getSlidesPerView();
+  const totalGroups = Math.ceil(SUCCESS_PHOTOS.length / slidesPerView);
+  dotsContainer.innerHTML = Array.from({ length: totalGroups }, (_, i) =>
+    `<span class="carousel-dot ${i === 0 ? "active" : ""}" data-dot="${i}"></span>`
+  ).join("");
+
+  // Dot click listener
+  dotsContainer.querySelectorAll(".carousel-dot").forEach(dot => {
+    dot.addEventListener("click", () => goToGroup(parseInt(dot.dataset.dot)));
+  });
+}
+
+let currentGroup = 0;
+
+function goToGroup(groupIndex) {
+  const track = document.getElementById("carouselTrack");
+  const dotsContainer = document.getElementById("carouselDots");
+  const slidesPerView = getSlidesPerView();
+  const totalGroups = Math.ceil(SUCCESS_PHOTOS.length / slidesPerView);
+
+  // Clamp index
+  currentGroup = Math.max(0, Math.min(groupIndex, totalGroups - 1));
+
+  // Slide width + gap হিসাব করে translate
+  const slideEl = track.querySelector(".carousel-slide");
+  if (!slideEl) return;
+  const gap = 24; // 1.5rem = 24px (CSS এর gap এর সাথে মেলাতে হবে)
+  const slideWidth = slideEl.offsetWidth + gap;
+  track.style.transform = `translateX(-${currentGroup * slidesPerView * slideWidth}px)`;
+
+  // Dots update
+  dotsContainer.querySelectorAll(".carousel-dot").forEach((dot, i) => {
+    dot.classList.toggle("active", i === currentGroup);
+  });
+
+  // Buttons disabled state
+  document.getElementById("carouselPrev").disabled = currentGroup === 0;
+  document.getElementById("carouselNext").disabled = currentGroup >= totalGroups - 1;
+}
+
+// Arrow button listeners
+document.getElementById("carouselPrev").addEventListener("click", () => {
+  goToGroup(currentGroup - 1);
+});
+document.getElementById("carouselNext").addEventListener("click", () => {
+  goToGroup(currentGroup + 1);
+});
+
+// Touch/swipe support for mobile
+(function setupSwipe() {
+  const container = document.querySelector(".carousel-track-container");
+  if (!container) return;
+  let startX = 0;
+  container.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, { passive: true });
+  container.addEventListener("touchend", e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? goToGroup(currentGroup + 1) : goToGroup(currentGroup - 1);
+    }
+  }, { passive: true });
+})();
+
+// Window resize হলে carousel rebuild করুন
+window.addEventListener("resize", () => {
+  buildCarousel();
+  currentGroup = 0;
+  goToGroup(0);
+});
+
+// Auto-play: প্রতি ৪ সেকেন্ডে automatically পরের slide এ যাবে
+// বন্ধ করতে চাইলে নিচের সম্পূর্ণ setInterval block টি delete করুন
+let autoPlayInterval = setInterval(() => {
+  const slidesPerView = getSlidesPerView();
+  const totalGroups = Math.ceil(SUCCESS_PHOTOS.length / slidesPerView);
+  goToGroup(currentGroup >= totalGroups - 1 ? 0 : currentGroup + 1);
+}, 4000);
+
+// Mouse hover এ auto-play থামবে, চলে গেলে resume হবে
+const carouselWrapper = document.querySelector(".carousel-wrapper");
+if (carouselWrapper) {
+  carouselWrapper.addEventListener("mouseenter", () => clearInterval(autoPlayInterval));
+  carouselWrapper.addEventListener("mouseleave", () => {
+    autoPlayInterval = setInterval(() => {
+      const slidesPerView = getSlidesPerView();
+      const totalGroups = Math.ceil(SUCCESS_PHOTOS.length / slidesPerView);
+      goToGroup(currentGroup >= totalGroups - 1 ? 0 : currentGroup + 1);
+    }, 4000);
+  });
+}
+
+// Carousel initialize
+buildCarousel();
+goToGroup(0);
+
+
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((e) => {
@@ -121,7 +291,7 @@ const observer = new IntersectionObserver(
 
    document
      .querySelectorAll(
-       ".teacher-card, .about-box, .contact-form, .address-card",
+       ".teacher-card, .about-box, .contact-form, .address-card, .carousel-slide",
      )
      .forEach((el) => {
        el.style.opacity = "0";

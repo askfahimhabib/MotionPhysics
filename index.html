@@ -34,6 +34,7 @@
         <li><a href="#hero">Home</a></li>
         <li><a href="#team">Faculty</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#success">Success</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="#address">Find Us</a></li>
         <li><a href="#" id="notices-link">Notices</a></li>
@@ -252,6 +253,49 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- OUR SUCCESS -->
+    <!-- ════════════════════════════════════════════════════════════════
+         OUR SUCCESS SECTION — PHOTO CAROUSEL
+         ════════════════════════════════════════════════════════════════
+         ছবি যোগ করার উপায়:
+         নিচের SUCCESS_PHOTOS array-তে প্রতিটি ছবির তথ্য দিন।
+         প্রতিটি object-এ:
+           - src      → ছবির URL (Google Photos, ImgBB, Cloudinary ইত্যাদি থেকে)
+           - caption  → ছবির নিচে যে ক্যাপশন দেখাবে
+           - label    → ছবির উপরে ছোট badge লেবেল (যেমন "Exam Result", "Event")
+
+         ছবি হোস্ট করার সহজ উপায়:
+         1. https://imgbb.com — ফ্রি, সরাসরি image URL পাওয়া যায়
+         2. Google Photos → শেয়ার করুন → "Anyone with the link" → direct link নিন
+         3. আপনার images/ ফোল্ডারে রাখলে: src: "./images/photo1.jpg"
+         ════════════════════════════════════════════════════════════════ -->
+    <section id="success">
+      <div class="section">
+        <div class="section-label">Our Achievements</div>
+        <h2 class="section-title">
+          OUR <span style="color: var(--accent)">SUCCESS</span>
+        </h2>
+        <div class="carousel-wrapper">
+          <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Previous slide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <div class="carousel-track-container">
+            <div class="carousel-track" id="carouselTrack">
+              <!-- ছবিগুলো JavaScript থেকে dynamically যোগ হবে -->
+            </div>
+          </div>
+          <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Next slide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+        <div class="carousel-dots" id="carouselDots"></div>
       </div>
     </section>
 
